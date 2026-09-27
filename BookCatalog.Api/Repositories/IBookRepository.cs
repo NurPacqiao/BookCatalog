@@ -4,9 +4,9 @@ namespace BookCatalog.Api.Repositories;
 
 public interface IBookRepository
 {
-    IEnumerable<Book> GetAll();
-    Book? GetById(Guid id);
-    void Add(Book book);
-    bool Update(Book book);
-    bool Delete(Guid id);
+    Task<IEnumerable<Book>> GetAllAsync();
+    Task<Book?> GetByIdAsync(Guid id);
+    Task AddAsync(Book book);
+    Task<bool> UpdateAsync(Book book);
+    Task<bool> DeleteAsync(Guid id);
 }

@@ -5,38 +5,32 @@ namespace BookCatalog.Api.Repositories;
 
 public class InMemoryBookRepository : IBookRepository
 {
-    // A thread-safe dictionary: Key = Guid (Book ID), Value = Book object
     private readonly ConcurrentDictionary<Guid, Book> _books = new();
 
-    public IEnumerable<Book> GetAll()
-    {
-        return _books.Values;
-    }
+    public Task<IEnumerable<Book>> GetAllAsync() =>
+        Task.FromResult<IEnumerable<Book>>(_books.Values);
 
-    public Book? GetById(Guid id)
+    public Task<Book?> GetByIdAsync(Guid id)
     {
         _books.TryGetValue(id, out var book);
-        return book;
+        return Task.FromResult(book);
     }
 
-    public void Add(Book book)
+    public Task AddAsync(Book book)
     {
         _books[book.Id] = book;
+        return Task.CompletedTask;
     }
 
-    public bool Update(Book book)
+    public Task<bool> UpdateAsync(Book book)
     {
         if (!_books.ContainsKey(book.Id))
-        {
-            return false;
-        }
+            return Task.FromResult(false);
 
         _books[book.Id] = book;
-        return true;
+        return Task.FromResult(true);
     }
 
-    public bool Delete(Guid id)
-    {
-        return _books.TryRemove(id, out _);
-    }
+    public Task<bool> DeleteAsync(Guid id) =>
+        Task.FromResult(_books.TryRemove(id, out _));
 }
