@@ -1,4 +1,3 @@
-// Services/BookService.cs
 using BookCatalog.Api.DTOs;
 using BookCatalog.Api.Mappings;
 using BookCatalog.Api.Repositories;
@@ -7,12 +6,21 @@ namespace BookCatalog.Api.Services;
 
 public class BookService(IBookRepository repository, ILogger<BookService> logger) : IBookService
 {
-    public async Task<IEnumerable<BookResponse>> GetAllAsync()
-    {
-        logger.LogInformation("Retrieving all books from storage.");
-        var books = await repository.GetAllAsync();
-        return books.Select(b => b.ToResponseDto());
-    }
+   
+    public async Task<PagedResponse<BookResponse>> GetAllAsync(BookQueryParameters parameters)
+{
+    logger.LogInformation("Retrieving books: Page {Page}, Size {PageSize}", parameters.Page, parameters.PageSize);
+    
+    var (books, totalCount) = await repository.GetAllAsync(parameters);
+    var bookResponses = books.Select(b => b.ToResponseDto());
+
+    return new PagedResponse<BookResponse>(
+        Items: bookResponses,
+        TotalCount: totalCount,
+        Page: parameters.Page,
+        PageSize: parameters.PageSize
+    );
+}
 
     public async Task<BookResponse?> GetByIdAsync(Guid id)
     {

@@ -1,11 +1,10 @@
-// Services/IBookService.cs
 using BookCatalog.Api.DTOs;
 
 namespace BookCatalog.Api.Services;
 
 public interface IBookService
 {
-    Task<IEnumerable<BookResponse>> GetAllAsync();
+    Task<PagedResponse<BookResponse>> GetAllAsync(BookQueryParameters parameters);
     Task<BookResponse?> GetByIdAsync(Guid id);
     Task<BookResponse> CreateAsync(CreateBookRequest request);
     Task<BookResponse?> UpdateAsync(Guid id, UpdateBookRequest request);

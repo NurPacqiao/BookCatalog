@@ -1,6 +1,5 @@
 namespace BookCatalog.Api.DTOs;
 
-// What the client sends when creating a book
 public record CreateBookRequest(
     string Title,
     string Author,
@@ -9,7 +8,6 @@ public record CreateBookRequest(
     decimal Price
 );
 
-// What the client sends when updating a book
 public record UpdateBookRequest(
     string Title,
     string Author,
@@ -18,7 +16,6 @@ public record UpdateBookRequest(
     decimal Price
 );
 
-// What we return back to the client
 public record BookResponse(
     Guid Id,
     string Title,
@@ -27,3 +24,31 @@ public record BookResponse(
     int PublicationYear,
     decimal Price
 );
+
+public record BookQueryParameters(
+    string? Search = null,
+    int? Year = null,
+    int Page = 1,
+    int PageSize = 10
+)
+{
+    public int Page { get; init; } = Page < 1 ? 1 : Page;
+    public int PageSize { get; init; } = PageSize switch
+    {
+        < 1 => 10,
+        > 50 => 50,
+        _ => PageSize
+    };
+}
+
+public record PagedResponse<T>(
+    IEnumerable<T> Items,
+    int TotalCount,
+    int Page,
+    int PageSize
+)
+{
+    public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
+    public bool HasNextPage => Page < TotalPages;
+    public bool HasPreviousPage => Page > 1;
+}

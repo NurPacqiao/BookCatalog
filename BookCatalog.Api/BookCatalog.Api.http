@@ -1,6 +1,61 @@
-@BookCatalog.Api_HostAddress = http://localhost:5191
+@baseUrl = http://localhost:5191
 
-GET {{BookCatalog.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Create Book 1: Robert C. Martin (2008)
+POST {{baseUrl}}/books
+Content-Type: application/json
 
-###
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "isbn": "978-0132350884",
+  "publicationYear": 2008,
+  "price": 37.99
+}
+
+### Create Book 2: Robert C. Martin (2017)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Clean Architecture",
+  "author": "Robert C. Martin",
+  "isbn": "978-0134494166",
+  "publicationYear": 2017,
+  "price": 39.99
+}
+
+### Create Book 3: Andrew Hunt (1999)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "The Pragmatic Programmer",
+  "author": "Andrew Hunt",
+  "isbn": "978-0201616224",
+  "publicationYear": 1999,
+  "price": 42.50
+}
+
+### Create Book 4: Martin Fowler (1999)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Refactoring",
+  "author": "Martin Fowler",
+  "isbn": "978-0201485677",
+  "publicationYear": 1999,
+  "price": 45.00
+}
+
+### Create Book 5: Eric Evans (2003)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Domain-Driven Design",
+  "author": "Eric Evans",
+  "isbn": "978-0321125217",
+  "publicationYear": 2003,
+  "price": 50.00
+}
