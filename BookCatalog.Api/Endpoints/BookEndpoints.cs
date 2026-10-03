@@ -10,6 +10,7 @@ public static class BookEndpoints
     {
         var group = app.MapGroup("/books");
 
+        // The route registration stays clean and unchanged
         group.MapGet("/", GetAllBooks);
         group.MapGet("/{id:guid}", GetBookById);
         group.MapPost("/", CreateBook);
@@ -19,10 +20,13 @@ public static class BookEndpoints
         return group;
     }
 
-    private static async Task<IResult> GetAllBooks(IBookService service)
+    // Add [AsParameters] BookQueryParameters parameters here
+    private static async Task<IResult> GetAllBooks(
+        [AsParameters] BookQueryParameters parameters,
+        IBookService service)
     {
-        var books = await service.GetAllAsync();
-        return Results.Ok(books);
+        var result = await service.GetAllAsync(parameters);
+        return Results.Ok(result);
     }
 
     private static async Task<IResult> GetBookById(Guid id, IBookService service)
