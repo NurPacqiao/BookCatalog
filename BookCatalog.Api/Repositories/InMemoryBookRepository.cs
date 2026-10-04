@@ -12,7 +12,6 @@ public class InMemoryBookRepository : IBookRepository
     {
         IEnumerable<Book> query = _books.Values;
 
-        // 1. Search in Title OR Author
         if (!string.IsNullOrWhiteSpace(parameters.Search))
         {
             query = query.Where(b => 
@@ -20,16 +19,13 @@ public class InMemoryBookRepository : IBookRepository
                 b.Author.Contains(parameters.Search, StringComparison.OrdinalIgnoreCase));
         }
 
-        // 2. Filter by Year if provided
         if (parameters.Year.HasValue)
         {
             query = query.Where(b => b.PublicationYear == parameters.Year.Value);
         }
 
-        // 3. Count total matching items before slicing
         var totalCount = query.Count();
 
-        // 4. Slice the current page
         var items = query
             .Skip((parameters.Page - 1) * parameters.PageSize)
             .Take(parameters.PageSize)

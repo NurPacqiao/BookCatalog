@@ -1,5 +1,8 @@
 @baseUrl = http://localhost:5191
 
+### Get all books
+GET {{baseUrl}}/books
+
 ### Create Book 1: Robert C. Martin (2008)
 POST {{baseUrl}}/books
 Content-Type: application/json
