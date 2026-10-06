@@ -1,7 +1,7 @@
-using BookCatalog.Api.DTOs;
-using BookCatalog.Api.Models;
+using BookCatalog.Domain.Entities;
+using BookCatalog.Domain.Common;
 
-namespace BookCatalog.Api.Repositories;
+namespace BookCatalog.Domain.Interfaces;
 
 public interface IBookRepository
 {

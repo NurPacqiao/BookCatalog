@@ -21,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BookCatalog.Api\BookCatalog.Api.csproj" />
+    <ProjectReference Include="..\..\src\BookCatalog.Domain\BookCatalog.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BookCatalog.Infrastructure\BookCatalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\BookCatalog.Api\BookCatalog.Api.csproj" />
   </ItemGroup>
 
 </Project>

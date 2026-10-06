@@ -1,6 +1,7 @@
 using BookCatalog.Api.DTOs;
 using BookCatalog.Api.Mappings;
-using BookCatalog.Api.Repositories;
+using BookCatalog.Domain.Common;      
+using BookCatalog.Domain.Interfaces;
 
 namespace BookCatalog.Api.Services;
 

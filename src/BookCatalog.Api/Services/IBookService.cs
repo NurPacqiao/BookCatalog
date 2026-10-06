@@ -1,4 +1,5 @@
 using BookCatalog.Api.DTOs;
+using BookCatalog.Domain.Common;
 
 namespace BookCatalog.Api.Services;
 

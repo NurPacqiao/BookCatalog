@@ -1,5 +1,6 @@
 using BookCatalog.Api.Endpoints;
-using BookCatalog.Api.Repositories;
+using BookCatalog.Infrastructure.Repositories;
+using BookCatalog.Domain.Interfaces;
 using BookCatalog.Api.Services;
 using FluentValidation;
 using Scalar.AspNetCore;

@@ -1,11 +1,13 @@
 using BookCatalog.Api.DTOs;
-using BookCatalog.Api.Models;
-using BookCatalog.Api.Repositories;
 using BookCatalog.Api.Services;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
+using BookCatalog.Domain.Common;      // For BookQueryParameters
+using BookCatalog.Domain.Entities;    // For Book (replaces BookCatalog.Api.Models)
+using BookCatalog.Domain.Interfaces;  // For IBookRepository (replaces BookCatalog.Api.Repositories)
+
 
 namespace BookCatalog.UnitTests.Services;
 
