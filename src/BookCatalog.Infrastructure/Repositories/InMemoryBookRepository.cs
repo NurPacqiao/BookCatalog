@@ -1,8 +1,9 @@
 using System.Collections.Concurrent;
-using BookCatalog.Api.DTOs;
-using BookCatalog.Api.Models;
+using BookCatalog.Domain.Common;
+using BookCatalog.Domain.Entities;
+using BookCatalog.Domain.Interfaces;
 
-namespace BookCatalog.Api.Repositories;
+namespace BookCatalog.Infrastructure.Repositories;
 
 public class InMemoryBookRepository : IBookRepository
 {

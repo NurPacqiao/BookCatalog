@@ -1,4 +1,5 @@
 using BookCatalog.Api.DTOs;
+using BookCatalog.Domain.Common;
 using BookCatalog.Api.Services;
 using FluentValidation;
 
