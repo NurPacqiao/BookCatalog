@@ -1,75 +1,68 @@
 # Book Catalog Platform API
 
-A layered REST API built with ASP.NET Core (.NET 10) for managing a catalog of books, featuring in-memory persistence, request validation, centralized error handling, and unit test suites.
+A layered REST API built with ASP.NET Core (.NET 10) for managing a book catalog, featuring in-memory persistence, request validation, centralized error handling, and unit test coverage.
 
 ---
 
 ## Architecture & Project Structure
 
-The solution follows a multi-project **Layered Architecture** to enforce separation of concerns:
+The solution enforces strict compiler-level separation of concerns across standalone class libraries:
 
 ````text
 BookCatalog/
 ├── src/
-│   ├── BookCatalog.Domain/          # Core business entities, interfaces, and shared records
-│   ├── BookCatalog.Infrastructure/  # Persistence implementations (In-Memory Repository)
-│   └── BookCatalog.Api/             # Minimal API endpoints, DTOs, mappings, middleware
+│   ├── BookCatalog.Domain/          # Core business entities, contracts, and query models (zero dependencies)
+│   ├── BookCatalog.Infrastructure/  # Data access implementation (InMemoryBookRepository)
+│   └── BookCatalog.Api/             # Minimal APIs, DTOs, FluentValidation, and middleware
 ├── tests/
-│   └── BookCatalog.UnitTests/       # Unit tests for domain logic, validators, and error handling
+│   └── BookCatalog.UnitTests/       # Domain logic, validator boundaries, and pipeline tests
 ├── BookCatalog.slnx                 # Solution configuration
-└── DESIGN_NOTE.md                   # Architectural decisions and technical notes
+└── DESIGN_NOTE.md                   # Architectural decisions, trade-offs, and design evolution
 
+- **Domain:** Pure business models (`Book`), query specifications (`BookQueryParameters`), and repository abstractions (`IBookRepository`).
+- **Infrastructure:** Implements storage mechanics using thread-safe `ConcurrentDictionary`. Depends only on `Domain`.
+- **Api:** Presentation layer handling HTTP routing, model binding, and dependency injection orchestration.
+- **UnitTests:** Isolated test suite verifying business logic, validation boundaries, and exception handling.
 
+## Tech Stack
 
-Architectural Boundaries
-- Domain: Zero external dependencies. Declares the Book entity, IBookRepository contract, and query parameter types.
-- Infrastructure: References Domain. Contains data access logic (InMemoryBookRepository).
-- Api: References Domain and Infrastructure. Exposes HTTP endpoints, handles serialization, and injects dependencies.
-- UnitTests: Isolated test suite verifying business logic, request validation rules, and middleware.
+- **Runtime & Language:** .NET 10 / C# 14
+- **Framework:** ASP.NET Core Minimal APIs
+- **API Documentation:** Swagger / OpenAPI & Scalar
+- **Validation:** FluentValidation
+- **Error Handling:** RFC 7807 ProblemDetails via `IExceptionHandler`
+- **Testing:** xUnit, FluentAssertions, NSubstitute
 
-Tech Stack & Tools
-- Runtime & Framework: .NET 10 / C# 14
-- Web Framework: ASP.NET Core Minimal APIs
-- Validation: FluentValidation
-- Testing: xUnit, FluentAssertions, NSubstitute
-- Error Handling: RFC 7231 ProblemDetails (IExceptionHandler)
+## Getting Started
 
-Getting Started
-Prerequisites
-- .NET 10 SDK
+### Prerequisites
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
 
-Run the Application
-From the repository root:
+### Run the Application
+```bash
 dotnet run --project src/BookCatalog.Api
 
-The API will start and display local localhost URLs (e.g., https://localhost:5191).
+### API Documentation & Interactive UI
 
-Run Unit Tests
-Execute the full test suite across the solution:
-dotnet test
+Once running, explore and test the endpoints using either interface:
+- **Scalar UI:** `https://localhost:5191/scalar/v1`
+- **Swagger UI:** `https://localhost:5191/swagger`
 
-API Endpoints
-Method	Endpoint	Description
-GET	    /books	    Retrieve paginated books (supports search, year, page, pageSize)
-GET	    /books/{id}	Retrieve a book by its UUID
-POST	/books	    Create a new book with payload validation
-PUT	    /books/{id}	Update existing book details
-DELETE	/books/{id}	Remove a book by UUID
+*(Port may vary depending on your local launch profile).*
 
-### 3. Stage, Commit, and Push
-
-Run:
+### Run Unit Tests
 
 ```bash
-# 1. Check status
-git status
+dotnet test
 
-# 2. Stage changes
-git add DESIGN_NOTE.md README.md
 
-# 3. Commit
-git commit -m "docs: add root README and relocate design note"
+## API Endpoints
 
-# 4. Push branch to GitHub
-git push origin <your-branch-name>
+| Method | Endpoint | Description | Parameters / Payload | Status Codes |
+| :--- | :--- | :--- | :--- | :--- |
+| `GET` | `/books` | Retrieve paginated books | Query: `search`, `year`, `page`, `pageSize` | `200 OK` |
+| `GET` | `/books/{id}` | Retrieve a book by ID | Route: `id` (GUID) | `200 OK`, `404 Not Found` |
+| `POST` | `/books` | Create a new book | Body: `CreateBookRequest` (JSON) | `201 Created`, `400 Bad Request` |
+| `PUT` | `/books/{id}` | Update existing book details | Route: `id` (GUID)<br>Body: `UpdateBookRequest` (JSON) | `204 NoContent`, `400 Bad Request`, `404 Not Found` |
+| `DELETE` | `/books/{id}` | Remove a book from the catalog | Route: `id` (GUID) | `204 NoContent`, `404 Not Found` |
 ````
