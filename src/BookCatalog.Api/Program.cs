@@ -26,6 +26,12 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Book Catalog API v1");
+        options.RoutePrefix = "swagger"; 
+    });
 }
 
 app.UseHttpsRedirection();
