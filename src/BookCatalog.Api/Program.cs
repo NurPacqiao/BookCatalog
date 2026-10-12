@@ -13,7 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-builder.Services.AddSingleton<IBookRepository, InMemoryBookRepository>();
+builder.Services.AddSingleton<IBookRepository, EfBookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
