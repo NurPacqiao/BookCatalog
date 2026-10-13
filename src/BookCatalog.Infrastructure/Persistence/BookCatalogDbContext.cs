@@ -8,6 +8,7 @@ public class BookCatalogDbContext(DbContextOptions<BookCatalogDbContext> options
 {
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
+    public DbSet<Member> Members => Set<Member>();
     public DbSet<Loan> Loans => Set<Loan>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
