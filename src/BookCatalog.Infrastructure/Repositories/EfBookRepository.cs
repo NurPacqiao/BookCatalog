@@ -38,7 +38,10 @@ public class EfBookRepository(BookCatalogDbContext db) : IBookRepository
     }
 
     public async Task<Book?> GetByIdAsync(Guid id) =>
-        await db.Books.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+    await db.Books
+        .AsNoTracking()
+        .Include(b => b.Author)
+        .FirstOrDefaultAsync(b => b.Id == id);
 
     public async Task AddAsync(Book book)
     {

@@ -8,7 +8,7 @@ public class UpdateBookRequestValidator : AbstractValidator<UpdateBookRequest>
     public UpdateBookRequestValidator()
     {
         RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required.");
-        RuleFor(x => x.Author).NotEmpty().WithMessage("Author is required.");
+        RuleFor(x => x.AuthorId).NotEmpty().WithMessage("AuthorId is required.");
         RuleFor(x => x.Isbn).NotEmpty().WithMessage("ISBN is required.");
         RuleFor(x => x.PublicationYear)
             .InclusiveBetween(868, DateTime.UtcNow.Year)
