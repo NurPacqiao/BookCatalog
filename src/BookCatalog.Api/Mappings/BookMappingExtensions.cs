@@ -5,25 +5,31 @@ namespace BookCatalog.Api.Mappings;
 
 public static class BookMappingExtensions
 {
-    public static BookResponse ToResponseDto(this Book book) =>
-        new(book.Id, book.Title, book.Author, book.Isbn, book.PublicationYear, book.Price);
+    public static Book ToEntity(this CreateBookRequest dto) => new()
+{
+    Id = Guid.NewGuid(),
+    Title = dto.Title,
+    Isbn = dto.Isbn,
+    PublicationYear = dto.PublicationYear,
+    Price = dto.Price,
+    AuthorId = dto.AuthorId
+};
 
-    public static Book ToEntity(this CreateBookRequest request) =>
-        new()
-        {
-            Title = request.Title.Trim(),
-            Author = request.Author.Trim(),
-            Isbn = request.Isbn.Trim(),
-            PublicationYear = request.PublicationYear,
-            Price = request.Price
-        };
+public static void UpdateEntity(this Book book, UpdateBookRequest dto)
+{
+    book.Title = dto.Title;
+    book.Isbn = dto.Isbn;
+    book.PublicationYear = dto.PublicationYear;
+    book.Price = dto.Price;
+    book.AuthorId = dto.AuthorId;
+}
 
-    public static void UpdateEntity(this Book book, UpdateBookRequest request)
-    {
-        book.Title = request.Title.Trim();
-        book.Author = request.Author.Trim();
-        book.Isbn = request.Isbn.Trim();
-        book.PublicationYear = request.PublicationYear;
-        book.Price = request.Price;
-    }
+public static BookResponse ToResponseDto(this Book book) => new(
+    Id: book.Id,
+    Title: book.Title,
+    AuthorId: book.AuthorId,
+    AuthorName: book.Author?.Name ?? string.Empty,
+    Isbn: book.Isbn,
+    PublicationYear: book.PublicationYear,
+    Price: book.Price);
 }

@@ -1,29 +1,25 @@
 namespace BookCatalog.Api.DTOs;
-
 public record CreateBookRequest(
     string Title,
-    string Author,
+    Guid AuthorId,
     string Isbn,
     int PublicationYear,
-    decimal Price
-);
+    decimal Price);
 
 public record UpdateBookRequest(
     string Title,
-    string Author,
+    Guid AuthorId,
     string Isbn,
     int PublicationYear,
-    decimal Price
-);
-
+    decimal Price);
 public record BookResponse(
     Guid Id,
     string Title,
-    string Author,
+    Guid AuthorId,
+    string AuthorName,
     string Isbn,
     int PublicationYear,
-    decimal Price
-);
+    decimal Price);
 
 public record PagedResponse<T>(
     IEnumerable<T> Items,

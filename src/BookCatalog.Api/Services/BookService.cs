@@ -33,8 +33,9 @@ public class BookService(IBookRepository repository, ILogger<BookService> logger
     {
         var book = request.ToEntity();
         await repository.AddAsync(book);
-        logger.LogInformation("Created book with ID: {BookId}", book.Id);
-        return book.ToResponseDto();
+
+        var created = await repository.GetByIdAsync(book.Id);
+        return created!.ToResponseDto();
     }
 
     public async Task<BookResponse?> UpdateAsync(Guid id, UpdateBookRequest request)

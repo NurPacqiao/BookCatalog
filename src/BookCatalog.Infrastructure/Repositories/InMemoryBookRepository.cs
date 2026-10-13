@@ -17,7 +17,7 @@ public class InMemoryBookRepository : IBookRepository
         {
             query = query.Where(b => 
                 b.Title.Contains(parameters.Search, StringComparison.OrdinalIgnoreCase) ||
-                b.Author.Contains(parameters.Search, StringComparison.OrdinalIgnoreCase));
+                b.Author.Name.Contains(parameters.Search, StringComparison.OrdinalIgnoreCase));
         }
 
         if (parameters.Year.HasValue)
